@@ -3,7 +3,7 @@ const cors = require('cors');
 const routerApi = require('./routes');
 const {checkApiKey}=require('./middlewares/auth.handler');
 const {logErrors,errorHandler,ormErrorHandler}=require('./middlewares/error.handler')
-
+const swaggerDoc = require('./swagger.json');
 const app = express();
  const port = process.env. PORT || 3000;
  app.use(express.json());
@@ -24,6 +24,8 @@ const app = express();
  }
  app.use(cors(options));
 
+
+
   //require ('./utils/');
 
   app.get('/', (req, res)=>{
@@ -38,6 +40,7 @@ app.get('/',(req, res)=>{
     res.send('hola mi servidor de express');
 
 })
+ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 routerApi(app);
 

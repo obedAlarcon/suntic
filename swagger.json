@@ -1,0 +1,199 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Gestión Técnica",
+    "description": "API para técnicos, usuarios, dispositivos y mantenimiento",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Servidor local"
+    }
+  ],
+  "tags": [
+    { "name": "Users" },
+    { "name": "Technicians" },
+    { "name": "Devices" },
+    { "name": "Areas" },
+    { "name": "Tasks" },
+    { "name": "Tours" },
+    { "name": "Bosses" },
+    { "name": "Customers" },
+    { "name": "Maints" },
+    { "name": "OrderMaint" },
+    { "name": "Tools" }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Listar usuarios",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Crear usuario",
+        "responses": {
+          "201": { "description": "Creado" }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Obtener usuario por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Actualizar usuario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Actualizado" }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Eliminar usuario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Eliminado" }
+        }
+      }
+    },
+
+    "/technicians": {
+      "get": {
+        "tags": ["Technicians"],
+        "summary": "Listar técnicos",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      },
+      "post": {
+        "tags": ["Technicians"],
+        "summary": "Crear técnico",
+        "responses": {
+          "201": { "description": "Creado" }
+        }
+      }
+    },
+
+    "/devices": {
+      "get": {
+        "tags": ["Devices"],
+        "summary": "Listar dispositivos",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+
+    "/areas": {
+      "get": {
+        "tags": ["Areas"],
+        "summary": "Listar áreas",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+
+    "/tasks": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "Listar tareas",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+
+    "/tours": {
+      "get": {
+        "tags": ["Tours"],
+        "summary": "Listar tours",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+
+    "/bosses": {
+      "get": {
+        "tags": ["Bosses"],
+        "summary": "Listar jefes",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+
+    "/customers": {
+      "get": {
+        "tags": ["Customers"],
+        "summary": "Listar clientes",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+
+    "/maints": {
+      "get": {
+        "tags": ["Maints"],
+        "summary": "Listar mantenimientos",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+
+    "/order_maint": {
+      "get": {
+        "tags": ["OrderMaint"],
+        "summary": "Listar órdenes de mantenimiento",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+
+    "/tools": {
+      "get": {
+        "tags": ["Tools"],
+        "summary": "Listar herramientas",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    }
+  }
+}
