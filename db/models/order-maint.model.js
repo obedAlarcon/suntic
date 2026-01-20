@@ -60,6 +60,7 @@ const { MAINT_TABLE } = require("./maint.model")
             foreignKey:'orderMaintId',
             otherKey:'maintId'
          })
+         
 
         }
 

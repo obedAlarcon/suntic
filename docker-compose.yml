@@ -8,11 +8,13 @@ services:
      - POSTGRES_USER=obed
      - POSTGRES_PASSWORD=obed2024@
      -  POSTGRES_DB=suntic
+     
     ports:
       - 5433:5432
       # este es el puerto donde corre esta dbexec postgres
+
     volumes:
-      - ./postgres_data:/var/lib/postgresql/18/data
+      - ./postgres_data:/var/lib/postgresql
 # en el volumes colocamos la ruta, esto es para que lo que hagamos lo mande a la bd y lo guarde 
 
   

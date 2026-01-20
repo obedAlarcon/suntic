@@ -1,73 +1,80 @@
 
 
+const { allow } = require('joi');
+const { types } = require('pg');
+const {Model, Sequelize, DataTypes, NUMBER}= require('sequelize');
 
 
-const {Model, DataTypes, Sequelize}=require('sequelize');
-const {USER_TABLE}=require('./user.model')
-
-const CUSTOMER_TABLE = 'customer';
+const CUSTOMER_TABLE ='customer';
 const CustomerSchema={
     id:{
         allowNull:false,
         autoIncrement:true,
+        type:DataTypes. INTEGER,
         primaryKey:true,
-        type:DataTypes.INTEGER
+
     },
     name:{
         allowNull:false,
-        type:DataTypes.STRING
+        type:DataTypes.STRING,
     },
     lastName:{
         allowNull:false,
         type:DataTypes.STRING,
-        field:'last_name' // espara que en la base de datos salga asi
     },
     phone:{
         allowNull:false,
         type:DataTypes.STRING
     },
-    createdAt:{
-        allowNull:false,
-        type:DataTypes.DATE,
-        field:'created_at',
-        defaultValue:Sequelize.NOW,
-    },
-
-   userId:{
-        field:'user_id',
+    userId:{
         allowNull:false,
         type:DataTypes.INTEGER,
-        unique:true,
-        references:{
-            model:USER_TABLE,
-            key:'id'
-        },
-   // que quieres que yo haga si eso llega a pasar
-     onUpdate:'CASCADE',// COMPORTAMIENTO EN CASCADA U ACTUALIAZ EL ID
+        field:'user_id',
+    },
+    email:{
+        allowNull:false,
+        type:DataTypes.STRING,
+        unique:true
+    },
+    password:{
+        allowNull:false,
+        type:DataTypes.STRING
+    },
 
-     //PERO QUE PASA SI HAY ONDELETE
-     onDelete:'SET NULL'
+  
 
-    }
+    createdAt:{
+        field:'created_at',
+        allowNull:false,
+        type:DataTypes.DATE,
+        defaultValue:Sequelize.NOW
+    },
+
 }
+
 class Customer extends Model{
     static associate(models){
-this.belongsTo(models.User,{as:'user'})       
-        // este se corre en el index con los inits
- //associate
-    }
-  
-  
-  
 
-static config(sequelize){
-    return {
-        sequelize,
-        tableName:CUSTOMER_TABLE,
-        modelName:'Customer',
-        timestamps:false,
+          this.hasOne(models.Customer, {
+      as: 'customer',
+      foreignKey: 'userId',
+      
+
+    });
     }
 
+    static config(sequelize){
+        return{
+            sequelize,
+            tableName:CUSTOMER_TABLE,
+            modelName:'Customer',
+            timestamps:false
+        }
+    }
 }
+
+module.exports={
+    Customer,
+    CUSTOMER_TABLE,
+    CustomerSchema
 }
-module.exports ={Customer, CustomerSchema,CUSTOMER_TABLE };

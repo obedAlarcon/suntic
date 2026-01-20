@@ -154,3 +154,8 @@ docker-compose up -d pgadmin
 ├── services/                   # Lógica de negocio
 ├── postgres_data/              # Volumen de datos PostgreSQL (Docker)
 └── README.md
+
+
+url de archivo swagger
+
+http://localhost:3000/api-docs/#/Users/post_users

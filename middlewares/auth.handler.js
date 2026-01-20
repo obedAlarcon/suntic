@@ -1,6 +1,7 @@
 
 
-const boom = require('@hapi/boom'); // boom getiona errores 
+const boom = require('@hapi/boom'); // boom ges
+// tiona errores 
 const {config}=require('./../config/config');
 
 

@@ -3,7 +3,10 @@ const cors = require('cors');
 const routerApi = require('./routes');
 const {checkApiKey}=require('./middlewares/auth.handler');
 const {logErrors,errorHandler,ormErrorHandler}=require('./middlewares/error.handler')
+
+const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
+
 const app = express();
  const port = process.env. PORT || 3000;
  app.use(express.json());
@@ -31,7 +34,7 @@ const app = express();
   app.get('/', (req, res)=>{
     res.send('hola este es el servodor de suntic ');
   })
-app.get('/nueva-ruta',(req, res) => {
+app.get('/nueva-ruta', checkApiKey,(req, res) => {
     res.send('hola soy la nueva ruta');
 })
 

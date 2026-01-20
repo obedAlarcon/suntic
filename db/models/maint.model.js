@@ -60,7 +60,7 @@ const { TECHNICIANS_TABLE } = require('./technicians.model');
  
 
    createdAt:{
-    field:'creted_at',
+    field:'created_at',
     allowNull:false,
     type:DataTypes.DATE,
     defaultValue:Sequelize.NOW
@@ -73,7 +73,10 @@ const { TECHNICIANS_TABLE } = require('./technicians.model');
      static associate(models){
       this.belongsTo(models.Area, { as: 'area'});
       this.belongsTo(models.Technicians,{as:'technicians'})
- 
+       this.belongsTo(models.Customer,{
+         as:'customer',
+         foreignKey:'customerId'
+       })
       
      }
    static config(sequelize){

@@ -2,15 +2,15 @@
   "openapi": "3.0.3",
   "info": {
     "title": "API Gestión Técnica",
-    "description": "API para técnicos, usuarios, dispositivos y mantenimiento",
+    "description": "API REST con Express y Sequelize. CRUD completo solo para usuarios y técnicos.",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://localhost:3000/api/v1",
-      "description": "Servidor local"
+      "url": "http://localhost:3000/api/v1"
     }
   ],
+
   "tags": [
     { "name": "Users" },
     { "name": "Technicians" },
@@ -24,23 +24,50 @@
     { "name": "OrderMaint" },
     { "name": "Tools" }
   ],
+
   "paths": {
     "/users": {
       "get": {
         "tags": ["Users"],
         "summary": "Listar usuarios",
         "responses": {
-          "200": { "description": "OK" }
+          "200": {
+            "description": "Listado de usuarios",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/User" }
+                }
+              }
+            }
+          }
         }
       },
       "post": {
         "tags": ["Users"],
         "summary": "Crear usuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateUser" }
+            }
+          }
+        },
         "responses": {
-          "201": { "description": "Creado" }
+          "201": {
+            "description": "Usuario creado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          }
         }
       }
     },
+
     "/users/{id}": {
       "get": {
         "tags": ["Users"],
@@ -54,7 +81,13 @@
           }
         ],
         "responses": {
-          "200": { "description": "OK" }
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          }
         }
       },
       "put": {
@@ -68,8 +101,15 @@
             "schema": { "type": "integer" }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateUser" }
+            }
+          }
+        },
         "responses": {
-          "200": { "description": "Actualizado" }
+          "200": { "description": "Usuario actualizado" }
         }
       },
       "delete": {
@@ -84,7 +124,7 @@
           }
         ],
         "responses": {
-          "204": { "description": "Eliminado" }
+          "204": { "description": "Usuario eliminado" }
         }
       }
     },
@@ -94,14 +134,99 @@
         "tags": ["Technicians"],
         "summary": "Listar técnicos",
         "responses": {
-          "200": { "description": "OK" }
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Technician" }
+                }
+              }
+            }
+          }
         }
       },
       "post": {
         "tags": ["Technicians"],
         "summary": "Crear técnico",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateTechnician" }
+            }
+          }
+        },
         "responses": {
-          "201": { "description": "Creado" }
+          "201": {
+            "description": "Técnico creado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Technician" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/technicians/{id}": {
+      "get": {
+        "tags": ["Technicians"],
+        "summary": "Obtener técnico por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Technician" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Technicians"],
+        "summary": "Actualizar técnico",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateTechnician" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Técnico actualizado" }
+        }
+      },
+      "delete": {
+        "tags": ["Technicians"],
+        "summary": "Eliminar técnico",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Técnico eliminado" }
         }
       }
     },
@@ -115,85 +240,56 @@
         }
       }
     },
+    
+    "/areas": {"get": { "tags": ["Areas"], "summary": "Listar áreas", "responses": { "200": { "description": "OK" } } }},
+    "/tasks": { "get": { "tags": ["Tasks"], "summary": "Listar tareas", "responses": { "200": { "description": "OK" } } }},
+    "/tours": { "get": { "tags": ["Tours"], "summary": "Listar tours", "responses": { "200": { "description": "OK" } } }},
+    "/bosses": { "get": { "tags": ["Bosses"], "summary": "Listar jefes", "responses": { "200": { "description": "OK" } } }},
+    "/customers": { "get": { "tags": ["Customers"], "summary": "Listar clientes", "responses": { "200": { "description": "OK" } }} },
+    "/maints": { "get": { "tags": ["Maints"], "summary": "Listar mantenimientos", "responses": { "200": { "description": "OK" } } }},
+    "/order_maint": { "get": { "tags": ["OrderMaint"], "summary": "Listar órdenes de mantenimiento", "responses": { "200": { "description": "OK" } } },
+    "/tools": { "get": { "tags": ["Tools"], "summary": "Listar herramientas", "responses": { "200": { "description": "OK" } } }
+  },
 
-    "/areas": {
-      "get": {
-        "tags": ["Areas"],
-        "summary": "Listar áreas",
-        "responses": {
-          "200": { "description": "OK" }
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "name": { "type": "string", "example": "Juan Pérez" },
+          "email": { "type": "string", "example": "juan@mail.com" },
+          "role": { "type": "string", "example": "admin" },
+          "createdAt": { "type": "string", "format": "date-time" }
         }
-      }
-    },
-
-    "/tasks": {
-      "get": {
-        "tags": ["Tasks"],
-        "summary": "Listar tareas",
-        "responses": {
-          "200": { "description": "OK" }
+      },
+      "CreateUser": {
+        "type": "object",
+        "required": ["name", "email", "role"],
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "role": { "type": "string" }
         }
-      }
-    },
-
-    "/tours": {
-      "get": {
-        "tags": ["Tours"],
-        "summary": "Listar tours",
-        "responses": {
-          "200": { "description": "OK" }
+      },
+      "Technician": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "specialty": { "type": "string" }
         }
-      }
-    },
-
-    "/bosses": {
-      "get": {
-        "tags": ["Bosses"],
-        "summary": "Listar jefes",
-        "responses": {
-          "200": { "description": "OK" }
-        }
-      }
-    },
-
-    "/customers": {
-      "get": {
-        "tags": ["Customers"],
-        "summary": "Listar clientes",
-        "responses": {
-          "200": { "description": "OK" }
-        }
-      }
-    },
-
-    "/maints": {
-      "get": {
-        "tags": ["Maints"],
-        "summary": "Listar mantenimientos",
-        "responses": {
-          "200": { "description": "OK" }
-        }
-      }
-    },
-
-    "/order_maint": {
-      "get": {
-        "tags": ["OrderMaint"],
-        "summary": "Listar órdenes de mantenimiento",
-        "responses": {
-          "200": { "description": "OK" }
-        }
-      }
-    },
-
-    "/tools": {
-      "get": {
-        "tags": ["Tools"],
-        "summary": "Listar herramientas",
-        "responses": {
-          "200": { "description": "OK" }
+      },
+      "CreateTechnician": {
+        "type": "object",
+        "required": ["name", "specialty"],
+        "properties": {
+          "name": { "type": "string" },
+          "specialty": { "type": "string" }
         }
       }
     }
+  }
+}
   }
 }
