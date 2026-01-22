@@ -12,8 +12,9 @@ async create(data){
       const hash= await bcript.hash(data.password,10);
     const newUser = await models.User.create({
         //clonamos el objeto
-        ...data,
-        password:hash
+       email: user.email,
+  password: hash,
+  role: 'customer'
     })
      
     //delete newUser.dataValues.password;

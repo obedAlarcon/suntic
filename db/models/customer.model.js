@@ -2,7 +2,9 @@
 
 const { allow } = require('joi');
 const { types } = require('pg');
-const {Model, Sequelize, DataTypes, NUMBER}= require('sequelize');
+const {Model, Sequelize, DataTypes}= require('sequelize');
+
+const {USER_TABLE}=require('./user.model')
 
 
 const CUSTOMER_TABLE ='customer';
@@ -30,16 +32,16 @@ const CustomerSchema={
         allowNull:false,
         type:DataTypes.INTEGER,
         field:'user_id',
+        unique:true,
+        references:{
+            model:USER_TABLE,
+            key:'id'
+        },
+        onUpdate:'CASCADE',
+        ondelete:'SET NULL'
+
     },
-    email:{
-        allowNull:false,
-        type:DataTypes.STRING,
-        unique:true
-    },
-    password:{
-        allowNull:false,
-        type:DataTypes.STRING
-    },
+ 
 
   
 
@@ -55,8 +57,8 @@ const CustomerSchema={
 class Customer extends Model{
     static associate(models){
 
-          this.hasOne(models.Customer, {
-      as: 'customer',
+          this.belongsTo(models.User, {
+      as: 'user',
       foreignKey: 'userId',
       
 

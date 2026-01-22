@@ -11,11 +11,10 @@ class CustomerService{
 
 
     async create(data){
-      
-        
+    
         const newCustomer=await models.Customer.create(data,{
-          include:['user']
-          
+      include:['user']
+        
         });
         
         return newCustomer;

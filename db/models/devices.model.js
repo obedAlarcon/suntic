@@ -87,7 +87,7 @@ class Device extends Model{
 
         this.belongsTo(models.Area,{
             as:'area',
-            foreignKey:'areaId'
+           
         })
 
     }

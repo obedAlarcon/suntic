@@ -1,30 +1,26 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "API Gestión Técnica",
-    "description": "API REST con Express y Sequelize. CRUD completo solo para usuarios y técnicos.",
+    "title": "Suntic – Gestión Técnica API",
+    "description": "API REST desarrollada con Express, Sequelize y Joi. Documentación completa orientada a reclutadores.",
     "version": "1.0.0"
   },
   "servers": [
-    {
-      "url": "http://localhost:3000/api/v1"
-    }
+    { "url": "http://localhost:3000/api/v1" }
   ],
-
   "tags": [
     { "name": "Users" },
+    { "name": "Customers" },
     { "name": "Technicians" },
-    { "name": "Devices" },
     { "name": "Areas" },
+    { "name": "Devices" },
     { "name": "Tasks" },
+    { "name": "Maints" },
     { "name": "Tours" },
     { "name": "Bosses" },
-    { "name": "Customers" },
-    { "name": "Maints" },
-    { "name": "OrderMaint" },
-    { "name": "Tools" }
+    { "name": "Tools" },
+    { "name": "OrderMaint" }
   ],
-
   "paths": {
     "/users": {
       "get": {
@@ -73,12 +69,7 @@
         "tags": ["Users"],
         "summary": "Obtener usuario por ID",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
         ],
         "responses": {
           "200": {
@@ -94,17 +85,12 @@
         "tags": ["Users"],
         "summary": "Actualizar usuario",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateUser" }
+              "schema": { "$ref": "#/components/schemas/UpdateUser" }
             }
           }
         },
@@ -116,12 +102,7 @@
         "tags": ["Users"],
         "summary": "Eliminar usuario",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
         ],
         "responses": {
           "204": { "description": "Usuario eliminado" }
@@ -129,17 +110,17 @@
       }
     },
 
-    "/technicians": {
+    "/customers": {
       "get": {
-        "tags": ["Technicians"],
-        "summary": "Listar técnicos",
+        "tags": ["Customers"],
+        "summary": "Listar clientes",
         "responses": {
           "200": {
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Technician" }
+                  "items": { "$ref": "#/components/schemas/Customer" }
                 }
               }
             }
@@ -147,22 +128,21 @@
         }
       },
       "post": {
-        "tags": ["Technicians"],
-        "summary": "Crear técnico",
+        "tags": ["Customers"],
+        "summary": "Crear cliente con usuario",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateTechnician" }
+              "schema": { "$ref": "#/components/schemas/CreateCustomer" }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Técnico creado",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Technician" }
+                "schema": { "$ref": "#/components/schemas/Customer" }
               }
             }
           }
@@ -170,85 +150,51 @@
       }
     },
 
-    "/technicians/{id}": {
+    "/customers/{id}": {
       "get": {
-        "tags": ["Technicians"],
-        "summary": "Obtener técnico por ID",
+        "tags": ["Customers"],
+        "summary": "Obtener cliente por ID",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
         ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Technician" }
+                "schema": { "$ref": "#/components/schemas/Customer" }
               }
             }
           }
         }
       },
       "put": {
-        "tags": ["Technicians"],
-        "summary": "Actualizar técnico",
+        "tags": ["Customers"],
+        "summary": "Actualizar cliente",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateTechnician" }
+              "schema": { "$ref": "#/components/schemas/UpdateCustomer" }
             }
           }
         },
         "responses": {
-          "200": { "description": "Técnico actualizado" }
+          "200": { "description": "Cliente actualizado" }
         }
       },
       "delete": {
-        "tags": ["Technicians"],
-        "summary": "Eliminar técnico",
+        "tags": ["Customers"],
+        "summary": "Eliminar cliente",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
         ],
         "responses": {
-          "204": { "description": "Técnico eliminado" }
+          "204": { "description": "Cliente eliminado" }
         }
       }
-    },
-
-    "/devices": {
-      "get": {
-        "tags": ["Devices"],
-        "summary": "Listar dispositivos",
-        "responses": {
-          "200": { "description": "OK" }
-        }
-      }
-    },
-    
-    "/areas": {"get": { "tags": ["Areas"], "summary": "Listar áreas", "responses": { "200": { "description": "OK" } } }},
-    "/tasks": { "get": { "tags": ["Tasks"], "summary": "Listar tareas", "responses": { "200": { "description": "OK" } } }},
-    "/tours": { "get": { "tags": ["Tours"], "summary": "Listar tours", "responses": { "200": { "description": "OK" } } }},
-    "/bosses": { "get": { "tags": ["Bosses"], "summary": "Listar jefes", "responses": { "200": { "description": "OK" } } }},
-    "/customers": { "get": { "tags": ["Customers"], "summary": "Listar clientes", "responses": { "200": { "description": "OK" } }} },
-    "/maints": { "get": { "tags": ["Maints"], "summary": "Listar mantenimientos", "responses": { "200": { "description": "OK" } } }},
-    "/order_maint": { "get": { "tags": ["OrderMaint"], "summary": "Listar órdenes de mantenimiento", "responses": { "200": { "description": "OK" } } },
-    "/tools": { "get": { "tags": ["Tools"], "summary": "Listar herramientas", "responses": { "200": { "description": "OK" } } }
+    }
   },
 
   "components": {
@@ -256,40 +202,74 @@
       "User": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer", "example": 1 },
-          "name": { "type": "string", "example": "Juan Pérez" },
-          "email": { "type": "string", "example": "juan@mail.com" },
-          "role": { "type": "string", "example": "admin" },
+          "id": { "type": "integer" },
+          "email": { "type": "string", "format": "email" },
+          "role": { "type": "string" },
           "createdAt": { "type": "string", "format": "date-time" }
         }
       },
+
       "CreateUser": {
         "type": "object",
-        "required": ["name", "email", "role"],
+        "required": ["email", "password", "role"],
         "properties": {
-          "name": { "type": "string" },
-          "email": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "password": { "type": "string", "minLength": 8 },
           "role": { "type": "string" }
         }
       },
-      "Technician": {
+
+      "UpdateUser": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer" },
-          "name": { "type": "string" },
-          "specialty": { "type": "string" }
+          "email": { "type": "string", "format": "email" },
+          "password": { "type": "string" },
+          "role": { "type": "string" }
         }
       },
-      "CreateTechnician": {
+
+      "Customer": {
         "type": "object",
-        "required": ["name", "specialty"],
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "name": { "type": "string", "example": "obed" },
+          "lastName": { "type": "string", "example": "Pérez" },
+          "phone": { "type": "string", "example": "3000000000" },
+          "userId": { "type": "integer", "example": 5 },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+
+      "CreateCustomer": {
+        "type": "object",
+        "required": ["name", "lastName", "phone", "user"],
         "properties": {
           "name": { "type": "string" },
-          "specialty": { "type": "string" }
+          "lastName": { "type": "string" },
+          "phone": { "type": "string" },
+          "user": {
+            "type": "object",
+            "required": ["email", "password"],
+            "properties": {
+              "email": { "type": "string", "format": "email" },
+              "password": { "type": "string", "minLength": 8 }
+            }
+          }
+        }
+      },
+
+      "UpdateCustomer": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "lastName": { "type": "string" },
+          "phone": { "type": "string" },
+          "userId": { "type": "integer" }
         }
       }
     }
-  }
-}
   }
 }
